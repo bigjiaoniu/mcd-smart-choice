@@ -1,0 +1,39 @@
+{
+  "context": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "recorded-2026-10-17-round3"
+  },
+  "budget_fen": 2500,
+  "baseline": null,
+  "candidates": [
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "recorded-2026-10-17-round3",
+      "name": "麦香鸡＋锡兰红茶",
+      "price_data": {
+        "price": 2750
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_DISCOVERY.md 第三轮报价记录",
+      "extra_items": []
+    },
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "recorded-2026-10-17-round3",
+      "name": "麦香鸡＋冰美式中杯",
+      "price_data": {
+        "price": 2840
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_DISCOVERY.md 第三轮报价记录",
+      "extra_items": []
+    }
+  ],
+  "coupon_status": "none_available",
+  "data_source": "从 WorkBuddy 接口发现文档手动转录的脱敏报价摘要，不是原始 MCP 响应；未由 Codex 独立复核"
+}

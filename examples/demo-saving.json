@@ -1,0 +1,33 @@
+{
+  "data_source": "全部虚构，仅验证计算；verified 在此仅为模拟标记",
+  "budget_fen": 2500,
+  "baseline": {
+    "name": "原需求直接购买（虚构）",
+    "payable_fen": 2200,
+    "verified": true,
+    "meets_needs": true,
+    "store_id": "demo-not-real",
+    "dining_mode": "pickup",
+    "quote_batch": "fictional-batch",
+    "extra_items": []
+  },
+  "candidates": [
+    {
+      "name": "满足相同需求的用券方案（虚构）",
+      "payable_fen": 2000,
+      "verified": true,
+      "meets_needs": true,
+      "store_id": "demo-not-real",
+      "dining_mode": "pickup",
+      "quote_batch": "fictional-batch",
+      "extra_items": []
+    }
+  ],
+  "report": {
+    "need": "模拟需求：一个汉堡和一份饮品，预算25元。",
+    "store_label": "虚构门店",
+    "queried_at": "模拟数据，无真实查询时间",
+    "data_label": "全部为模拟数据，仅演示“满足相同需求时真实少花钱”，不是当前真实优惠。",
+    "evidence": "examples/demo-saving.json，不作为真实 MCP 调用证据。"
+  }
+}

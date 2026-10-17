@@ -1,0 +1,49 @@
+{
+  "context": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "mcp-run-02-2026-10-17"
+  },
+  "budget_fen": 2500,
+  "baseline": null,
+  "candidates": [
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "mcp-run-02-2026-10-17",
+      "name": "麦香鸡＋锡兰红茶",
+      "price_data": {
+        "price": 2750
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_RUN_02.md 报价1",
+      "extra_items": []
+    },
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "mcp-run-02-2026-10-17",
+      "name": "麦香鸡＋冰美式中杯",
+      "price_data": {
+        "price": 2840
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_RUN_02.md 报价2",
+      "extra_items": []
+    }
+  ],
+  "coupon_status": "none_available",
+  "data_source": "本轮 calculate-price 真实调用返回的脱敏整数分报价；工具返回 success=true code=200；不含 Token、账号、完整券码或完整原始响应",
+  "report": {
+    "need": "预算25元；一个鸡肉汉堡和一份经核实的无糖饮品；不接受瓶装水；到店自取。",
+    "store_label": "世界城广场餐厅 · 到店自取",
+    "queried_at": "2026-10-17 12:32（北京时间）",
+    "data_label": "历史报价回放，非实时查询。报价与调用状态据 WorkBuddy 脱敏记录，原始调用未由 Codex 独立复核。",
+    "evidence": "docs/MCP_RUN_02.md；无券状态沿用此前一轮查询，并非本轮重新查询。",
+    "pending_question": "还没查清这款饮品是否无糖",
+    "no_option_advice": "这两份分别需要27.50元、28.40元，都超过你的25元预算；而且是否无糖还没确认。因此这次先不推荐这两份，也不会替你改成瓶装水。",
+    "comparison_explanation": "这次没有完成“用券是否省钱”的比较：此前查询没有可用券，也还没找到符合你要求的普通购买方案。现在能确认的是这两份餐的历史报价。"
+  }
+}

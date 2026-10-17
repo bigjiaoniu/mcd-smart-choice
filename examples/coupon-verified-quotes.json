@@ -1,0 +1,161 @@
+{
+  "context": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "direct-coupon-2026-10-17-124727"
+  },
+  "budget_fen": 2500,
+  "baseline": null,
+  "price_reference": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "direct-coupon-2026-10-17-124727",
+    "name": "不用券：麦香鸡＋中杯冰美式",
+    "price_data": {
+      "price": 2840
+    },
+    "business_success": true,
+    "meets_needs": null,
+    "evidence_ref": "docs/MCP_COUPON_RUN_03.md without-coupon",
+    "extra_items": [],
+    "basket_items": [
+      {
+        "productCode": "1450",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "100136",
+              "key": "0-1",
+              "quantity": 1
+            },
+            {
+              "code": "100168",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      },
+      {
+        "productCode": "507411",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "200002",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "direct-coupon-2026-10-17-124727",
+      "name": "不用券：麦香鸡＋中杯冰美式",
+      "price_data": {
+        "price": 2840
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_COUPON_RUN_03.md without-coupon",
+      "extra_items": [],
+      "basket_items": [
+        {
+          "productCode": "1450",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "100136",
+                "key": "0-1",
+                "quantity": 1
+              },
+              {
+                "code": "100168",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "productCode": "507411",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "200002",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "direct-coupon-2026-10-17-124727",
+      "name": "用9.9元券：麦香鸡＋中杯冰美式",
+      "price_data": {
+        "price": 2640
+      },
+      "business_success": true,
+      "meets_needs": null,
+      "evidence_ref": "docs/MCP_COUPON_RUN_03.md with-coupon",
+      "extra_items": [],
+      "basket_items": [
+        {
+          "productCode": "1450",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "100136",
+                "key": "0-1",
+                "quantity": 1
+              },
+              {
+                "code": "100168",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "productCode": "507411",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "200002",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "coupon_status": "available_verified",
+  "data_source": "Codex 直接调用官方 MCP query-store-coupons、query-meal-detail、calculate-price；价格经同轮双报价核验。",
+  "report": {
+    "need": "预算25元；一个鸡肉汉堡和一份无糖饮品；不接受瓶装水；到店自取。",
+    "store_label": "世界城广场餐厅 · 到店自取",
+    "queried_at": "2026-10-17 12:47:27（接口返回时间，北京时间）",
+    "data_label": "真实用券报价记录。此页面回放查询结果，不会自动刷新价格。未下单、未支付、未核销优惠券。",
+    "pending_question": "还没查清这款冰美式是否无糖",
+    "no_option_advice": "这张券确实让同一份餐少付2元，没有增加餐品。但用券后仍需26.40元，比25元预算多1.40元；是否无糖也还没确认，所以暂不推荐为此增加预算。",
+    "comparison_explanation": "不用券已享促销价：28.40元。用券后：26.40元。两次餐品、数量和特制选择相同，实际少付2元；不能把相对划线价的9.10元优惠当成这张券额外省下的钱。",
+    "evidence": "docs/MCP_COUPON_RUN_03.md。商品价格和需求是否符合分别判断；未确认无糖不阻止同款商品的价格对比。"
+  }
+}

@@ -1,0 +1,11 @@
+__pycache__/
+*.pyc
+.env
+.env.*
+!.env.example
+.mcp.json
+.cursor/
+workbuddy.local*
+local/
+
+.workbuddy-ai/

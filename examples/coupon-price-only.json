@@ -1,0 +1,159 @@
+{
+  "context": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "direct-coupon-2026-10-17-124727"
+  },
+  "budget_fen": 2500,
+  "baseline": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "direct-coupon-2026-10-17-124727",
+    "name": "不用券：麦香鸡＋中杯冰美式",
+    "price_data": {
+      "price": 2840
+    },
+    "business_success": true,
+    "meets_needs": true,
+    "evidence_ref": "docs/MCP_COUPON_RUN_03.md without-coupon",
+    "extra_items": [],
+    "basket_items": [
+      {
+        "productCode": "1450",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "100136",
+              "key": "0-1",
+              "quantity": 1
+            },
+            {
+              "code": "100168",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      },
+      {
+        "productCode": "507411",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "200002",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "price_reference": {
+    "store_id": "1960088",
+    "dining_mode": "pickup",
+    "quote_batch": "direct-coupon-2026-10-17-124727",
+    "name": "不用券：麦香鸡＋中杯冰美式",
+    "price_data": {
+      "price": 2840
+    },
+    "business_success": true,
+    "meets_needs": true,
+    "evidence_ref": "docs/MCP_COUPON_RUN_03.md without-coupon",
+    "extra_items": [],
+    "basket_items": [
+      {
+        "productCode": "1450",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "100136",
+              "key": "0-1",
+              "quantity": 1
+            },
+            {
+              "code": "100168",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      },
+      {
+        "productCode": "507411",
+        "quantity": 1,
+        "modification": {
+          "values": [
+            {
+              "code": "200002",
+              "key": "0-1",
+              "quantity": 1
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "candidates": [
+    {
+      "store_id": "1960088",
+      "dining_mode": "pickup",
+      "quote_batch": "direct-coupon-2026-10-17-124727",
+      "name": "用9.9元券：麦香鸡＋中杯冰美式",
+      "price_data": {
+        "price": 2640
+      },
+      "business_success": true,
+      "meets_needs": true,
+      "evidence_ref": "docs/MCP_COUPON_RUN_03.md with-coupon",
+      "extra_items": [],
+      "basket_items": [
+        {
+          "productCode": "1450",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "100136",
+                "key": "0-1",
+                "quantity": 1
+              },
+              {
+                "code": "100168",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        },
+        {
+          "productCode": "507411",
+          "quantity": 1,
+          "modification": {
+            "values": [
+              {
+                "code": "200002",
+                "key": "0-1",
+                "quantity": 1
+              }
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "coupon_status": "available_verified",
+  "data_source": "Codex 直接调用官方 MCP query-store-coupons、query-meal-detail、calculate-price；价格经同轮双报价核验。",
+  "report": {
+    "need": "麦香鸡 ×1、中杯冰美式 ×1；到店自取。",
+    "store_label": "世界城广场餐厅 · 到店自取",
+    "queried_at": "2026-10-17 12:47:27（接口返回时间，北京时间）",
+    "data_label": "真实用券报价记录。此页面回放查询结果，不会自动刷新价格。未下单、未支付、未核销优惠券。",
+    "no_option_advice": "同样的餐，用券从28.40元降到26.40元，少付2元，没有加购。但仍比25元预算多1.40元，是否购买由你决定。",
+    "comparison_explanation": "不用券也有7.10元促销优惠。这张券额外省了2元，并不是优惠明细里的9.10元。",
+    "evidence": "docs/MCP_COUPON_RUN_03.md。沿用同一次真实报价，仅改为指定餐品的价格对比演示，不判断糖含量；原始无糖需求测试保留在coupon-verified-quotes.json。"
+  }
+}
