@@ -27,7 +27,15 @@ def main(argv=None):
     live.add_argument("--needs-status", choices=["pending", "confirmed", "rejected"], default="pending", help="餐品/口味要求是否已确认，预算独立检查；默认待确认")
     live.add_argument("--config", type=Path, help="显式指定本机MCP配置；默认读取环境变量MCD_MCP_TOKEN")
     live.add_argument("--output", type=Path, default=ROOT / "local/live-report.html")
+    ui = modes.add_parser("ui", help="启动本机可视化工具：搜索门店、选餐与用券比较")
+    ui.add_argument("--config", type=Path, help="显式指定本机MCP配置；默认读取MCD_MCP_TOKEN")
+    ui.add_argument("--port", type=int, default=8765)
+    ui.add_argument("--open", action="store_true", help="同时打开默认浏览器")
     args = parser.parse_args(argv)
+    if args.mode == "ui":
+        from ui_server import serve
+        serve(args.config, args.port, args.open)
+        return 0
     try:
         if args.mode == "demo":
             files = {"coupon": ("coupon-price-only.json", True), "no-match": ("latest-quotes.json", True),

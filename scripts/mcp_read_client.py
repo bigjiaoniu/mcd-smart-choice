@@ -4,7 +4,7 @@ import os
 from pathlib import Path
 from urllib.request import Request, urlopen
 
-ALLOWED = {"query-store-coupons", "query-my-coupons", "query-meals", "query-meal-detail", "calculate-price", "list-nutrition-foods"}
+ALLOWED = {"query-nearby-stores", "query-store-coupons", "query-my-coupons", "query-meals", "query-meal-detail", "calculate-price", "list-nutrition-foods"}
 
 class Client:
     def __init__(self, config_path=None):

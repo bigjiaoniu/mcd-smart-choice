@@ -78,6 +78,8 @@ def run_live(args, client=None):
     if args.coupon_product:
         matching = [c for c in coupons if any(str(v.get("productCode")) == args.coupon_product
                     for v in c.get("products", [])) and (not args.coupon_title or args.coupon_title in c.get("title", ""))]
+        if getattr(args, "coupon_identity", None):
+            matching = [c for c in matching if (c.get("couponId"), c.get("couponCode")) == args.coupon_identity]
         if len(matching) > 1:
             raise ValueError("多张券符合条件，请用 --coupon-title 缩小范围；本程序不假定其中一张更优惠")
     now = datetime.now(timezone(timedelta(hours=8))).isoformat(timespec="seconds")
@@ -114,6 +116,6 @@ def run_live(args, client=None):
                            data_label="真实查询结果回放，打开报告不会自动刷新价格；未下单或核销优惠券。",
                            evidence=record_path.name,
                            pending_question="你提出的部分要求尚未确认，不能仅凭餐品名称认定符合",
-                           comparison_explanation="同款餐品的少付金额由两次应付报价相减；它不代表无糖等要求已经满足。"))
+                           comparison_explanation="同款餐品的少付金额由两次应付报价相减，优惠明细中的总优惠不等于这张券额外省下的钱。"))
     return doc, dict(queried_at=now, context=context, tools=evidence,
                      limits=["单品默认规格，每件数量1，到店自取；未自动选餐、未下单", "需求符合状态由用户或Skill提供，程序不凭名称推断"])

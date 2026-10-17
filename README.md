@@ -20,6 +20,15 @@
 ## 目标用户
 想按预算点餐、判断优惠是否划算，且希望看懂推荐理由的用户。不为用券主动增加预算，不因临期催促购买。
 
+## 可视化使用：不用填编码
+```powershell
+python app.py ui --open
+```
+
+打开本机页面，即可先体验历史实测或模拟案例。Windows可双击 `start-ui.cmd`。实时查询时配置自己的Token或已有连接器，直接搜索门店、选餐品和券，再看实际差额；不需要手填门店或商品编码。详情见 [可视化指南](docs/UI_GUIDE.md)。
+
+![可视化工具](docs/images/interactive-ui.png)
+
 ## 30秒离线体验
 安装 Python 3.10 或更新版本，下载或克隆本仓库：https://github.com/bigjiaoniu/mcd-smart-choice 。无第三方依赖，不需要模型会员或 Token。打开终端进入项目目录：
 
@@ -73,4 +82,4 @@ python -m unittest discover -s tests -v
 只调用查询/价格试算工具，不下单、领券、支付、兑换或抽奖。新查询输出默认保存到被Git忽略的 `local/`，仅含白名单字段；仍需在公开前人工检查需求文字等自填内容。不要公开本机配置、完整券码、账号、手机号、私人地址或原始工具响应。
 
 ## 当前边界
-真实单品用券链路已验证；营养/糖含量匹配、套餐选配、原生Skill安装和独立用户试用尚未验证。不保证全局最低价。干净目录验证与实时入口验证见 docs/VERIFICATION.md。项目已公开发布于 https://github.com/bigjiaoniu/mcd-smart-choice 。比赛报名及完整WorkBuddy对话导出尚未完成。
+真实单品用券链路及可视化“搜索门店→选餐品→选券→双报价”已验证；营养/糖含量匹配、套餐选配、原生Skill安装和独立用户试用尚未验证。不保证全局最低价。干净目录验证与实时入口验证见 docs/VERIFICATION.md。项目已公开发布于 https://github.com/bigjiaoniu/mcd-smart-choice 。比赛报名及完整WorkBuddy对话导出尚未完成。

@@ -32,3 +32,6 @@ python scripts/render_report.py examples/latest-quotes.json --adapted --output l
 已明确单品与门店编码时，优先使用app.py live，避免由模型手工抄写每个报价JSON。参数与支持范围见仓库docs/LIVE_USAGE.md。自然语言需求仍需先澄清，默认needs-status=pending；只有获得明确证据后才能使用confirmed。遇到套餐/非默认规格需说明实时入口不支持，不能擅自替换成单品。
 
 仅离线展示时使用python app.py demo，不调用MCP或反复查询。不要为了整理日志或生成报告让用户重复消耗WorkBuddy额度。
+
+## 本地可视化体验
+偏好页面操作的用户可运行 python app.py ui --open，按docs/UI_GUIDE.md搜索门店、选餐品和券。页面选择的是具体餐品，不添加用户未提出的无糖等约束。凭证通过本机环境或显式配置读取，不要求用户粘贴到网页。
