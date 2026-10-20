@@ -253,7 +253,8 @@ def make_handler(service, nonce):
             routes = {"/": ("index.html", "text/html; charset=utf-8"), "/app.js": ("app.js", "text/javascript; charset=utf-8"),
                       "/style.css": ("style.css", "text/css; charset=utf-8"),
                       "/buddy-rules.js": ("buddy-rules.js", "text/javascript; charset=utf-8"),
-                      "/buddy.js": ("buddy.js", "text/javascript; charset=utf-8")}
+                      "/buddy.js": ("buddy.js", "text/javascript; charset=utf-8"),
+                      "/meal-tools.js": ("meal-tools.js", "text/javascript; charset=utf-8")}
             if route.path in routes:
                 file, kind = routes[route.path]
                 return self.send(200, (ROOT / "web" / file).read_bytes(), kind)

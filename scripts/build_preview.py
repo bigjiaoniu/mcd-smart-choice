@@ -11,7 +11,7 @@ def build(output):
     html=(ROOT/"web/index.html").read_text(encoding="utf-8")
     html=html.replace('<link rel="stylesheet" href="/style.css">', '<style>'+(ROOT/"web/style.css").read_text(encoding="utf-8")+'</style>')
     scripts=[]
-    for name in ("buddy-rules.js","buddy.js","app.js"):
+    for name in ("buddy-rules.js","buddy.js","meal-tools.js","app.js"):
         html=html.replace('<script src="/'+name+'" defer></script>', '')
         scripts.append((ROOT/"web"/name).read_text(encoding="utf-8"))
     html=html.replace('href="/" aria-label', 'href="#" aria-label')

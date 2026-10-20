@@ -3,13 +3,13 @@ const $ = (id) => document.getElementById(id);
 const esc = (v) => String(v ?? "").replace(/[&<>"']/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 const yuan = (v) => `¥${(v / 100).toFixed(2)}`;
 const buddyEvent=(event,payload={})=>window.dispatchEvent(new CustomEvent('mcd:buddy',{detail:{event,payload}}));
-const state = {mode:"demo",case:"coupon",csrf:"",configured:false,products:[],coupons:[],selected:[],coupon:"",store:null,category:"全部",rev:0,busy:false,suggestions:[],customDemo:null};
+const state = {mode:"demo",case:"coupon",csrf:"",configured:false,products:[],coupons:[],selected:[],coupon:"",store:null,category:"全部",rev:0,busy:false,suggestions:[],customDemo:null,lastResult:null};
 const icon = (name) => {
  const coffee = /咖|茶|饮|水|可乐|雪碧|美式|拿铁|奶铁/.test(name);
  return coffee ? '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M16 18h32l-4 38H21z" fill="#f3e7d0"/><path d="M19 27h26l-2 17H21z" fill="#75422b"/><path d="M13 16h38v5H13z" fill="#c79150"/><path d="M32 17l5-13h4l-5 13z" fill="#bc4d32"/><path d="M22 27l7 6 6-7 6 6" fill="none" stroke="#b78d63" stroke-width="4"/></svg>' : '<svg viewBox="0 0 64 64" aria-hidden="true"><path d="M8 28c1-13 10-21 24-21s24 8 24 21" fill="#eab34d"/><path d="M9 29h46l-4 8H13z" fill="#79a047"/><path d="M9 37h46v8H9z" fill="#81412c"/><path d="M10 44h44l-6 6H16z" fill="#f0ba37"/><path d="M10 51h44c-2 7-10 9-22 9s-20-2-22-9" fill="#dfa244"/><g stroke="#fff0c7" stroke-width="2" stroke-linecap="round"><path d="M22 17l3-1M35 14l3 1M43 22l3 1M29 24l3-1"/></g></svg>';
 };
 function message(msg, busy=false){if(msg)buddyEvent(busy?'busy':'error');$("message").hidden=!msg;$("message").innerHTML=busy ? `<span class="busy-indicator"></span>${esc(msg)}` : esc(msg);}
-function stale(){state.rev++;$("result").hidden=true;$("suggestion-panel").hidden=true;}
+function stale(){state.lastResult=null;state.rev++;$("result").hidden=true;$("suggestion-panel").hidden=true;}
 async function api(path, body){
  if(window.__OFFLINE_DEMOS){
   if(path==='/api/status')return {configured:false,csrf:''};
@@ -73,6 +73,7 @@ function demoItems(){
  renderMenu();renderCoupons();
 }
 function resultView(data){
+ state.lastResult=data;
  const rows=data.result.results;
  if(!rows.length){$("result-content").innerHTML='<p class="menu-empty">本次没有成功报价。</p>';$("result").hidden=false;return;}
  const direct=rows[0],last=rows[rows.length-1];
@@ -104,7 +105,7 @@ async function runDemo(){
  const rev=state.rev;try{const d=state.customDemo?repriceDemo(state.customDemo,Number($("budget").value)):await api('/api/demo?case='+encodeURIComponent(state.case)+'&budget='+encodeURIComponent($("budget").value));if(rev!==state.rev||state.mode!=='demo')return;resultView(d);message('');}catch(e){if(rev===state.rev)message(e.message);}
 }
 function setMode(mode){
- if(state.busy)return;state.mode=mode;stale();message('');
+ if(state.busy)return;state.mode=mode;state.mission='';document.querySelectorAll('[data-mission]').forEach(b=>b.classList.remove('active'));stale();message('');
  $("demo-mode").classList.toggle('active',mode==='demo');$("live-mode").classList.toggle('active',mode==='live');$("demo-mode").setAttribute('aria-pressed',String(mode==='demo'));$("live-mode").setAttribute('aria-pressed',String(mode==='live'));
  $("case-tabs").hidden=mode!=='demo';$("live-panel").hidden=mode!=='live';$("menu-controls").hidden=mode!=='live';$("source-badge").textContent=mode==='demo'?'历史实测':'你的实时查询';
  $("workspace-title").textContent=mode==='demo'?'先拿这份餐，算一笔账':'选好门店，看看你的券值不值';
@@ -156,7 +157,7 @@ async function findSuggestions(anchor,couponFocus=false){
   $("suggestion-panel").hidden=false;message('');buddyEvent('suggestions',data);
  }catch(e){message(e.message);}finally{state.busy=false;button.innerHTML=original;basket();}
 }
-$("find-meal").addEventListener('click',()=>findSuggestions());
+$("find-meal").addEventListener('click',()=>state.mission==='coupon'?$("plan-coupon").click():findSuggestions());
 for(const id of ['plan-main','plan-drink','plan-anchor'])$(id).addEventListener('change',()=>{state.rev++;$("suggestion-panel").hidden=true;});
 $("plan-coupon").addEventListener('click',()=>{
  if(state.busy)return;
@@ -186,4 +187,69 @@ $("result-content").addEventListener('click',e=>{
  const product=selectedItems().find(p=>b.dataset.help==='main'?/堡|卷|麦满分/.test(p.name):/咖|茶|美式|拿铁|可乐|雪碧|纯悦|水/.test(p.name));
  if(product)findSuggestions(product.id);else message('请在“这次想保留”中选一种餐品，再找搭配。');
 });
+
+const savedKey='mcd-saved-meals-v1';
+let savedMeals=[];
+try{const raw=JSON.parse(localStorage.getItem(savedKey)||'[]');if(Array.isArray(raw))savedMeals=raw.slice(0,8).map(MealTools.favorite);}catch{}
+function renderSaved(){
+ $("saved-count").textContent=`${savedMeals.length}份`;
+ $("saved-list").innerHTML=savedMeals.length?savedMeals.map((meal,i)=>`<article class="saved-card"><div><b>${meal.products.map(p=>esc(p.name)).join(' ＋ ')}</b><small>${meal.mode==='demo'?'案例搭配':esc(meal.store.name)} · 保存预算 ¥${esc(meal.budget)}</small></div><button data-restore="${i}">恢复并重新算价</button><button data-delete="${i}" aria-label="删除这份收藏">×</button></article>`).join(''):'<p class="saved-empty">把常吃的存下来，下次少翻一遍菜单。</p>';
+}
+function writeSaved(next){try{localStorage.setItem(savedKey,JSON.stringify(next));savedMeals=next;renderSaved();return true;}catch{$("saved-status").textContent='浏览器不允许本地保存，这次没有写入。';return false;}}
+$("save-meal").addEventListener('click',()=>{
+ if(state.busy)return;
+ try{
+  if(state.mode==='demo'&&state.case==='none')throw Error('这是多个方案的比较，请先选定一份搭配再收藏。');
+  const meal=MealTools.favorite({mode:state.mode,case:state.case,products:selectedItems(),store:state.store,budget:$("budget").value});
+  const signature=m=>JSON.stringify([m.mode,m.store?.id,m.case,m.products.map(p=>p.id).sort()]);
+  const next=[meal,...savedMeals.filter(m=>signature(m)!==signature(meal))].slice(0,8);
+  if(writeSaved(next)){$("save-status").textContent='已收藏 · 下次恢复会重新算价';buddyEvent('saved');}
+ }catch(e){$("save-status").textContent=e.message;}
+});
+$("saved-list").addEventListener('click',async e=>{
+ const remove=e.target.closest('[data-delete]');if(remove){writeSaved(savedMeals.filter((_,i)=>i!==Number(remove.dataset.delete)));return;}
+ const b=e.target.closest('[data-restore]');if(!b||state.busy)return;
+ const meal=savedMeals[Number(b.dataset.restore)];if(!meal)return;
+ if(meal.mode==='live'&&(state.mode!=='live'||state.store?.id!==meal.store.id)){
+  $("saved-status").textContent=`先在实时模式搜索并选中“${meal.store.name}”，然后再点恢复；不会跨门店套用餐品或旧券。`;
+  if(state.mode!=='live')setMode('live');$("keyword").value=meal.store.name;return;
+ }
+ if(meal.mode==='live'){
+  if(meal.products.some(p=>!state.products.some(v=>v.id===p.id))){$("saved-status").textContent='这家店当前菜单未包含收藏中的全部餐品，请重新选餐。';return;}
+  stale();$("budget").value=meal.budget;state.selected=meal.products.map(p=>p.id);state.coupon='';renderMenu();renderCoupons();
+  $("saved-status").textContent='餐品与保存预算已恢复，未恢复旧券。请选择当前券，再点“算算实际少付多少”。';buddyEvent('select');return;
+ }
+ if(state.mode!=='demo')setMode('demo');
+ state.case=meal.case;stale();$("budget").value=meal.budget;demoItems();
+ document.querySelectorAll('[data-case]').forEach(x=>x.classList.toggle('active',x.dataset.case===state.case));
+ $("source-badge").textContent=state.case==='extra'?'模拟演示':'历史实测';
+ if(meal.products.some(p=>p.id==='3505')){
+  const rev=state.rev;try{
+   const data=await api('/api/demo-suggest',{budget:meal.budget,drink:'tea',main:'chicken',coupon:'',anchor:''});
+   if(rev!==state.rev||state.mode!=='demo')return;
+   const option=data.options[0];if(!option)throw Error('这份历史记录当前不可用');
+   state.customDemo=option.comparison;state.selected=option.products;state.products=option.products.map((id,i)=>({id,name:option.names[i],price:''}));state.coupons=[];state.coupon='';renderMenu();renderCoupons();resultView(option.comparison);
+  }catch(err){$("saved-status").textContent=err.message;return;}
+ }else await runDemo();
+ $("saved-status").textContent='已恢复保存的预算和案例；这是历史或模拟数据，不代表当前价格。';
+});
+document.querySelectorAll('[data-mission]').forEach(button=>button.addEventListener('click',()=>{
+ if(state.busy)return;
+ const mission=button.dataset.mission;
+ if(mission==='coupon'&&!state.coupon){$("mission-note").textContent='先在下方选择一张当前可用券。没有券，也可以正常比较普通价格。';return;}
+ state.mission=mission;$("plan-anchor").value='';$("plan-main").value='chicken';$("plan-drink").value=mission==='coupon'?'any':mission;
+ stale();document.querySelectorAll('[data-mission]').forEach(b=>b.classList.toggle('active',b===button));
+ $("mission-note").textContent=mission==='coupon'?'会比较只买券餐品与搭配方案；点“按预算找搭配”开始，不替你增加预算。':`已选${mission==='coffee'?'主食＋咖啡':'主食＋茶饮'}。点“按预算找搭配”开始，保留你的现有预算。`;
+ buddyEvent('mission');
+}));
+for(const id of ['plan-main','plan-drink','plan-anchor'])$(id).addEventListener('change',()=>{state.mission='';document.querySelectorAll('[data-mission]').forEach(b=>b.classList.remove('active'));});
+$("export-receipt").addEventListener('click',()=>{
+ if(!state.lastResult){message('餐品或预算已变动，请先重新算价再导出。');return;}
+ try{
+  const html=MealTools.receipt(state.lastResult),url=URL.createObjectURL(new Blob([html],{type:'text/html;charset=utf-8'}));
+  const a=document.createElement('a');a.href=url;a.download='麦乐省钱侠-比价小票.html';a.click();setTimeout(()=>URL.revokeObjectURL(url),10000);
+ }catch(e){message(e.message);}
+});
+renderSaved();
+
 (async()=>{try{const d=await api('/api/status');state.csrf=d.csrf;state.configured=d.configured;}catch(e){message('无法连接本地服务，请通过 python app.py ui 启动。');}demoItems();await runDemo();})();
